@@ -11,7 +11,7 @@
     <div id="header">
         <ul>
             <li><a href="/main">ГЛАВНАЯ</a></li>
-            <li><a href="/main/login">КАБИНЕТ</a></li>
+            <li><a href="/account">КАБИНЕТ</a></li>
             <li><a href="/test" id="nav_test">ТЕСТЫ</a></li>
             <li><a href="/main/contact">КОНТАКТЫ</a></li>
             <li><a href="/main/about">О НАС</a></li>

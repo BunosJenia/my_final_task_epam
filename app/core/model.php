@@ -2,6 +2,11 @@
 
 class Model
 {
-    public function get_data(){
+    public $db_connection = false;
+
+    //
+    public function __construct(){
+        $this->db_connection = DB::getInstance();
     }
+
 }

@@ -6,6 +6,7 @@ class DB
     private $statement;
     private static $instance = null;
 
+    // Реализуем паттерн одиночка, для подключения к нашей БД
     public static function getInstance(){
         if(self::$instance === null){
             self::$instance = new DB();
@@ -14,11 +15,13 @@ class DB
         return self::$instance;
     }
 
+    // Метод подключения к БД
     private function DBConnection(){
         $this->connection = new PDO('mysql:dbname='.DB_NAME.';host='.DB_HOST.';port='.DB_PORT.
             ';charset='.DB_CHAR, DB_USER, DB_PASS);
     }
 
+    // Подготавливаем данные для запроса
     private function getQueryMetadata($query, $parameters){
         $parameters_string = '';
         $final_query_string = $query;
@@ -34,6 +37,7 @@ class DB
         return array ('parameters' => $parameters, 'final_query_string' => $final_query_string);
     }
 
+    // Собственно метод, в котором мы подготавливаем наш запрос
     public function executeQuery($query, $parameters = array()){
         $query_metadata = $this->getQueryMetadata($query, $parameters);
         $parameters = $query_metadata['parameters'];

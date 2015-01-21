@@ -1,0 +1,1 @@
+это ваш кабинет.<a href="index.php?logout=go">Выйти</a>

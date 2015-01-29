@@ -30,75 +30,6 @@ body{
     margin: 0 0 8px 0;
     border-bottom: 8px solid #de1b1b;
 }
-/*
-    Navigation Block
-*/
-#header ul{
-    list-style: none;
-    width: 100%;
-    margin: 0;
-    height: 50px;
-    padding: 0;
-}
-#header ul li{
-    height: 50px;
-    padding: 0 15px 0 15px;
-    width: 130px;
-    margin: 0;
-    display: inline;
-    white-space:nowrap;
-}
-#header ul a{
-    line-height: 50px;
-    color: #4e4e4e;
-    text-decoration: none;
-    display: inline-block;
-    width: 130px;
-    height: 1%;
-    overflow: hidden;
-    padding: 0 4px 21px 4px;
-    font-weight: 900;
-    font: 1.1em 'Roboto Slab', serif;
-    text-shadow: 3px 2px 2px rgba(150, 150, 150, 0.7);
-    -webkit-margin-before: 0.83em;
-    -webkit-margin-after: 0.83em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-    font-weight: bold;
-    -moz-box-sizing: border-box;
-}
-#header ul a:hover{
-    line-height: 50px;
-    height: 1%;
-    width: 130px;
-    border-right: 4px solid #de1b1b;
-    border-left: 4px solid #de1b1b;
-    color: #2B2B2B;
-    overflow: hidden;
-    padding: 0 0 21px 0;
-    font: 1.1em 'Roboto Slab', serif;
-    text-shadow: 3px 2px 2px rgba(150, 150, 150, 0.7);
-    -webkit-margin-before: 0.83em;
-    -webkit-margin-after: 0.83em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-    font-weight: bold;
-    -moz-box-sizing: border-box;
-}
-#header ul a#nav_test{
-    font: 1.1em 'Lobster', cursive;
-    font-weight: 300;
-    -moz-box-sizing: border-box;
-}
-#header ul a#nav_test:hover{
-    font: 1.1em 'Lobster', cursive;
-    font-weight: 300;
-    -moz-box-sizing: border-box;
-}
-/*
-    Navigation Block
-*/
-
 #footer{
     width: 100%;
     border-top: 8px solid #de1b1b;
@@ -128,6 +59,70 @@ body{
     line-height: 14px;
     word-spacing: 2px;
 }
+/*Navigation Block*/
+#header ul{
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    height: 50px;
+    padding: 0;
+}
+#header ul li{
+    height: 50px;
+    padding: 0 15px 0 15px;
+    width: 130px;
+    margin: 0;
+    display: inline;
+    white-space:nowrap;
+}
+#header ul a{
+    line-height: 50% normal;
+    color: #4e4e4e;
+    text-decoration: none;
+    display: inline-block;
+    width: 130px;
+    height: 1%;
+    overflow: hidden;
+    padding: 0 4px 21px 4px;
+    font-weight: 900;
+    font: 1.1em 'Roboto Slab', serif;
+    text-shadow: 3px 2px 2px rgba(150, 150, 150, 0.7);
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+    -moz-box-sizing: border-box;
+}
+#header ul a:hover{
+    line-height: 50% normal;
+    height: 1%;
+    width: 130px;
+    border-right: 4px solid #de1b1b;
+    border-left: 4px solid #de1b1b;
+    color: #2B2B2B;
+    overflow: hidden;
+    padding: 0 0 21px 0;
+    font: 1.1em 'Roboto Slab', serif;
+    text-shadow: 3px 2px 2px rgba(150, 150, 150, 0.7);
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+    -moz-box-sizing: border-box;
+}
+#header ul a#nav_test{
+    font: 1.1em 'Lobster', cursive;
+    font-weight: 300;
+    -moz-box-sizing: border-box;
+}
+#header ul a#nav_test:hover{
+    font: 1.1em 'Lobster', cursive;
+    font-weight: 300;
+    -moz-box-sizing: border-box;
+}
+/*Navigation Block*/
 
 .yellow{
     color: #E9E581;
@@ -190,7 +185,8 @@ a{
 .center{
     text-align: center;
 }
-
+/*модульная сетка*/
+/*input*/
 .form fieldset label{
     display: block;
     margin: 0 0 0 5px;
@@ -246,7 +242,7 @@ textarea:focus, textarea:hover{
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #fefa8b inset;
 }
-.form input[type="submit"]{
+.form input[type="submit"], .form input[type="button"]{
     outline: none;
     border: 2px solid black;
     color: #fff;
@@ -256,10 +252,49 @@ input:-webkit-autofill {
     font: 1.1em 'Roboto Slab', serif;
     font-weight: bold;
 }
-.form input[type="submit"]:hover, .form input[type="submit"]:active{
+.form input[type="submit"]:hover, .form input[type="submit"]:active, .form input[type="button"]:hover, .form input[type="button"]:active{
     outline: none;
     background: #de1b1b;
     font: 1.1em 'Roboto Slab', serif;
     font-weight: bold;
     cursor: pointer;
+}
+.form select{
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none!important;
+    outline: none;
+    border: 2px solid #000;
+    background-color: #fefa8b;
+    width: 200px;
+    height: 30px;
+    margin: 5px;
+    font: .9em 'Roboto Slab', serif;
+}
+/*input*/
+.menulist{
+}
+ul.menulist{
+    list-style: none;
+}
+.menulist li{
+    margin: 5px 0 5px 0;
+    border-bottom: 1px solid #fefa8b;
+    cursor: pointer;
+}
+.menulist li a{
+    color: #F6F6F6;
+    text-decoration: none;
+    text-indent: 0;
+}
+table{
+    width: 90%;
+    border-collapse: collapse;
+    border: 1px solid #fefa8b;
+}
+table td{
+    border: 1px solid #fefa8b;
+    min-width: 50px;
 }

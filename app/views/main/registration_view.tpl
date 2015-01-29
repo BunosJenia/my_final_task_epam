@@ -3,7 +3,7 @@
         <h1>Регистрация</h1>
     </div>
     <div class="col2 center form">
-        <form method="post" action="/">
+        <form method="post" action="/main/registration">
             <fieldset class="login_form">
                 <label for="login"><div>Логин:</div></label>
                 <input type="text" id="login" name="login" placeholder="login"><br>

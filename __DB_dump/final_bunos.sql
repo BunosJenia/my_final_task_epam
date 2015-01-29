@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50535
 File Encoding         : 65001
 
-Date: 2015-01-21 07:21:08
+Date: 2015-01-29 09:43:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,7 +24,7 @@ CREATE TABLE `categories_of_questions` (
   `coq_category` varchar(255) NOT NULL,
   `coq_subcategory` varchar(255) NOT NULL,
   PRIMARY KEY (`coq_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='This table contains all pairs of categories and subcategories';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='This table contains all pairs of categories and subcategories';
 
 -- ----------------------------
 -- Records of categories_of_questions
@@ -35,6 +35,7 @@ INSERT INTO `categories_of_questions` VALUES ('3', 'PHP', 'ООП');
 INSERT INTO `categories_of_questions` VALUES ('4', 'JAVA', 'Основы');
 INSERT INTO `categories_of_questions` VALUES ('5', 'JAVA', 'ООП');
 INSERT INTO `categories_of_questions` VALUES ('6', '.NET', 'Основы');
+INSERT INTO `categories_of_questions` VALUES ('7', 'PHP', 'qweqwe');
 
 -- ----------------------------
 -- Table structure for `config`
@@ -50,25 +51,6 @@ CREATE TABLE `config` (
 
 -- ----------------------------
 -- Records of config
--- ----------------------------
-
--- ----------------------------
--- Table structure for `correct_question_answer`
--- ----------------------------
-DROP TABLE IF EXISTS `correct_question_answer`;
-CREATE TABLE `correct_question_answer` (
-  `cqa_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cqa_qustion` int(10) unsigned NOT NULL,
-  `cqa_answer` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`cqa_id`),
-  KEY `cqa_qustion` (`cqa_qustion`),
-  KEY `cqa_answer` (`cqa_answer`),
-  CONSTRAINT `FK_correct_question_answer_questions_answer` FOREIGN KEY (`cqa_answer`) REFERENCES `questions_answer` (`qa_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_correct_question_answer_questions` FOREIGN KEY (`cqa_qustion`) REFERENCES `questions` (`q_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of correct_question_answer
 -- ----------------------------
 
 -- ----------------------------
@@ -137,7 +119,7 @@ CREATE TABLE `questions` (
   UNIQUE KEY `UQ_questions_q_picture_hash` (`q_picture_hash`),
   KEY `q_type` (`q_type`),
   CONSTRAINT `FK_questions_questions_type` FOREIGN KEY (`q_type`) REFERENCES `questions_type` (`qt_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='All info about questions';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='All info about questions';
 
 -- ----------------------------
 -- Records of questions
@@ -158,7 +140,7 @@ CREATE TABLE `questions_answer` (
   PRIMARY KEY (`qa_id`),
   KEY `qa_question` (`qa_question`),
   CONSTRAINT `FK_questions_answer_questions` FOREIGN KEY (`qa_question`) REFERENCES `questions` (`q_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='All answers here, if answer is correct - pole qa_correct has - 1, else NULL';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='All answers here, if answer is correct - pole qa_correct has - 1, else NULL';
 
 -- ----------------------------
 -- Records of questions_answer
@@ -191,8 +173,8 @@ CREATE TABLE `questions_answer_log` (
   PRIMARY KEY (`qal_id`),
   KEY `qal_answer` (`qal_answer`),
   KEY `qal_qustion_log` (`qal_qustion_log`),
-  CONSTRAINT `FK_questions_answer_log_questions_log` FOREIGN KEY (`qal_qustion_log`) REFERENCES `questions_log` (`ql_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_questions_answer_log_questions_answer` FOREIGN KEY (`qal_answer`) REFERENCES `questions_answer` (`qa_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_questions_answer_log_questions_answer` FOREIGN KEY (`qal_answer`) REFERENCES `questions_answer` (`qa_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_questions_answer_log_questions_log` FOREIGN KEY (`qal_qustion_log`) REFERENCES `questions_log` (`ql_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table contains all answers left from users and guests';
 
 -- ----------------------------
@@ -210,13 +192,15 @@ CREATE TABLE `questions_in_test` (
   PRIMARY KEY (`qit_id`),
   KEY `qit_question` (`qit_question`),
   KEY `qit_test` (`qit_test`),
-  CONSTRAINT `FK_questions_in_test_Tests` FOREIGN KEY (`qit_test`) REFERENCES `tests` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_questions_in_test_questions` FOREIGN KEY (`qit_question`) REFERENCES `questions` (`q_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_questions_in_test_questions` FOREIGN KEY (`qit_question`) REFERENCES `questions` (`q_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_questions_in_test_Tests` FOREIGN KEY (`qit_test`) REFERENCES `tests` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of questions_in_test
 -- ----------------------------
+INSERT INTO `questions_in_test` VALUES ('2', '3', '1');
+INSERT INTO `questions_in_test` VALUES ('3', '3', '2');
 
 -- ----------------------------
 -- Table structure for `questions_log`
@@ -234,9 +218,9 @@ CREATE TABLE `questions_log` (
   KEY `ql_guest` (`ql_guest`),
   KEY `ql_question` (`ql_question`),
   KEY `ql_test_pass_info` (`ql_test_pass_info`),
-  CONSTRAINT `FK_questions_log_test_passage_info` FOREIGN KEY (`ql_test_pass_info`) REFERENCES `test_passage_info` (`tpi_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_questions_log_guests` FOREIGN KEY (`ql_guest`) REFERENCES `guests` (`g_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_questions_log_questions` FOREIGN KEY (`ql_question`) REFERENCES `questions` (`q_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_questions_log_questions` FOREIGN KEY (`ql_question`) REFERENCES `questions` (`q_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_questions_log_test_passage_info` FOREIGN KEY (`ql_test_pass_info`) REFERENCES `test_passage_info` (`tpi_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table contains log about questions, who answered(guest or user - only in 1 pole can be 1,in ql_guest or in ql_test_pass_info), time, correct answer or not';
 
 -- ----------------------------
@@ -279,9 +263,9 @@ CREATE TABLE `qustion_category` (
   PRIMARY KEY (`qusc_id`),
   KEY `qusc_category` (`qusc_category`),
   KEY `qusc_qustion` (`qusc_qustion`),
-  CONSTRAINT `FK_qustion_category_questions` FOREIGN KEY (`qusc_qustion`) REFERENCES `questions` (`q_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_qustion_category_categories_of_questions` FOREIGN KEY (`qusc_category`) REFERENCES `categories_of_questions` (`coq_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_qustion_category_categories_of_questions` FOREIGN KEY (`qusc_category`) REFERENCES `categories_of_questions` (`coq_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_qustion_category_questions` FOREIGN KEY (`qusc_qustion`) REFERENCES `questions` (`q_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of qustion_category
@@ -289,6 +273,8 @@ CREATE TABLE `qustion_category` (
 INSERT INTO `qustion_category` VALUES ('1', '1', '1');
 INSERT INTO `qustion_category` VALUES ('2', '2', '1');
 INSERT INTO `qustion_category` VALUES ('3', '3', '1');
+INSERT INTO `qustion_category` VALUES ('4', '2', '2');
+INSERT INTO `qustion_category` VALUES ('5', '3', '2');
 
 -- ----------------------------
 -- Table structure for `roles_of_users`
@@ -330,11 +316,13 @@ CREATE TABLE `tests` (
   PRIMARY KEY (`t_id`),
   KEY `t_category` (`t_category`),
   CONSTRAINT `FK_Tests_categories_of_questions` FOREIGN KEY (`t_category`) REFERENCES `categories_of_questions` (`coq_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tests
 -- ----------------------------
+INSERT INTO `tests` VALUES ('1', 'Первый тип PHP', null, null, null, null, null, null, null, null, null, '1');
+INSERT INTO `tests` VALUES ('3', 'Test1', null, null, null, null, null, null, null, null, null, '1');
 
 -- ----------------------------
 -- Table structure for `tests_for_groups`
@@ -347,13 +335,14 @@ CREATE TABLE `tests_for_groups` (
   PRIMARY KEY (`tfg_id`),
   KEY `tfg_test` (`tfg_test`),
   KEY `tfg_group` (`tfg_group`),
-  CONSTRAINT `FK_tests_for_groups_training_groups` FOREIGN KEY (`tfg_group`) REFERENCES `training_groups` (`tg_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_tests_for_groups_Tests` FOREIGN KEY (`tfg_test`) REFERENCES `tests` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_tests_for_groups_Tests` FOREIGN KEY (`tfg_test`) REFERENCES `tests` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tests_for_groups_training_groups` FOREIGN KEY (`tfg_group`) REFERENCES `training_groups` (`tg_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tests_for_groups
 -- ----------------------------
+INSERT INTO `tests_for_groups` VALUES ('1', '1', '1');
 
 -- ----------------------------
 -- Table structure for `test_passage_info`
@@ -370,9 +359,9 @@ CREATE TABLE `test_passage_info` (
   PRIMARY KEY (`tpi_id`),
   KEY `tpi_test` (`tpi_test`),
   KEY `tpi_user` (`tpi_user`),
-  CONSTRAINT `FK_test_passage_info_users` FOREIGN KEY (`tpi_user`) REFERENCES `users` (`u_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_test_passage_info_Tests` FOREIGN KEY (`tpi_test`) REFERENCES `tests` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Test passage information, which contains: user, test, mark and etc.';
+  CONSTRAINT `FK_test_passage_info_Tests` FOREIGN KEY (`tpi_test`) REFERENCES `tests` (`t_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_test_passage_info_users` FOREIGN KEY (`tpi_user`) REFERENCES `users` (`u_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Test passage information, which contains: user, test, mark and etc.';
 
 -- ----------------------------
 -- Records of test_passage_info
@@ -386,12 +375,17 @@ CREATE TABLE `training_groups` (
   `tg_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tg_training_name` varchar(255) NOT NULL,
   `tg_description` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`tg_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`tg_id`),
+  UNIQUE KEY `UQ_training_groups_tg_training_name` (`tg_training_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of training_groups
 -- ----------------------------
+INSERT INTO `training_groups` VALUES ('1', 'php1', null);
+INSERT INTO `training_groups` VALUES ('2', 'java1', null);
+INSERT INTO `training_groups` VALUES ('68', 'asdas', '');
+INSERT INTO `training_groups` VALUES ('69', 'asdsasda', 'asdsaasdas');
 
 -- ----------------------------
 -- Table structure for `users`
@@ -410,15 +404,21 @@ CREATE TABLE `users` (
   UNIQUE KEY `UQ_users_u_email` (`u_email`),
   UNIQUE KEY `UQ_users_u_login` (`u_login`),
   UNIQUE KEY `UQ_users_u_long_auth` (`u_long_auth`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='User and information about user';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='User and information about user';
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('3', 'listener1', 'listener1@gmail.com', '', null, '', null, 'f0578f1e7174b1a41c4ea8c6e17f7a8a3b88c92a');
+INSERT INTO `users` VALUES ('3', 'listener1', 'listener1@gmail.com', 'слушатель1', 'слушатель1', 'слушатель1', null, 'f0578f1e7174b1a41c4ea8c6e17f7a8a3b88c92a');
 INSERT INTO `users` VALUES ('4', 'coach1', 'coach1@gmail.com', '', null, '', null, 'f0578f1e7174b1a41c4ea8c6e17f7a8a3b88c92a');
 INSERT INTO `users` VALUES ('5', 'manager1', 'manager1@gmail.com', '', null, '', null, 'f0578f1e7174b1a41c4ea8c6e17f7a8a3b88c92a');
 INSERT INTO `users` VALUES ('6', 'admin1', 'admin1@gmail.by', '', null, '', null, 'f0578f1e7174b1a41c4ea8c6e17f7a8a3b88c92a');
+INSERT INTO `users` VALUES ('12', 'listener2', 'listener2@gmail.com', 'слушатель2', 'слушатель2', 'слушатель2', null, 'f0578f1e7174b1a41c4ea8c6e17f7a8a3b88c92a');
+INSERT INTO `users` VALUES ('13', 'listener3', 'listener3@gmail.com', 'слушатель3', 'слушатель3', 'слушатель3', null, 'f0578f1e7174b1a41c4ea8c6e17f7a8a3b88c92a');
+INSERT INTO `users` VALUES ('14', 'listener4', 'listener4@gmail.com', 'слушатель4', 'слушатель4', 'слушатель4', null, 'f0578f1e7174b1a41c4ea8c6e17f7a8a3b88c92a');
+INSERT INTO `users` VALUES ('15', 'listener5', 'listener5@gmail.com', 'слушатель5', 'слушатель5', 'слушатель5', null, 'f0578f1e7174b1a41c4ea8c6e17f7a8a3b88c92a');
+INSERT INTO `users` VALUES ('16', 'user1', 'user1@gmail.com', 'user1', 'user1', 'user1', null, 'f0578f1e7174b1a41c4ea8c6e17f7a8a3b88c92a');
+INSERT INTO `users` VALUES ('17', 'jenia', 'jenia@gmail.com', '', null, '', null, '02ed8106ce00bb10a6e18f7c9afff99403ec9247');
 
 -- ----------------------------
 -- Table structure for `users_in_groups`
@@ -431,13 +431,16 @@ CREATE TABLE `users_in_groups` (
   PRIMARY KEY (`uig_id`),
   KEY `uig_group` (`uig_group`),
   KEY `uig_user` (`uig_user`),
-  CONSTRAINT `FK_users_in_groups_users` FOREIGN KEY (`uig_user`) REFERENCES `users` (`u_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_users_in_groups_training_groups` FOREIGN KEY (`uig_group`) REFERENCES `training_groups` (`tg_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_users_in_groups_training_groups` FOREIGN KEY (`uig_group`) REFERENCES `training_groups` (`tg_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_users_in_groups_users` FOREIGN KEY (`uig_user`) REFERENCES `users` (`u_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users_in_groups
 -- ----------------------------
+INSERT INTO `users_in_groups` VALUES ('1', '13', '1');
+INSERT INTO `users_in_groups` VALUES ('6', '12', '1');
+INSERT INTO `users_in_groups` VALUES ('7', '14', '1');
 
 -- ----------------------------
 -- Table structure for `users_roles`
@@ -450,9 +453,9 @@ CREATE TABLE `users_roles` (
   PRIMARY KEY (`ur_id`),
   KEY `ur_role` (`ur_role`),
   KEY `ur_user` (`ur_user`),
-  CONSTRAINT `FK_users_roles_users` FOREIGN KEY (`ur_user`) REFERENCES `users` (`u_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_users_roles_roles_of_users` FOREIGN KEY (`ur_role`) REFERENCES `roles_of_users` (`rou_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_users_roles_roles_of_users` FOREIGN KEY (`ur_role`) REFERENCES `roles_of_users` (`rou_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_users_roles_users` FOREIGN KEY (`ur_user`) REFERENCES `users` (`u_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users_roles
@@ -460,3 +463,8 @@ CREATE TABLE `users_roles` (
 INSERT INTO `users_roles` VALUES ('1', '4', '2');
 INSERT INTO `users_roles` VALUES ('2', '5', '3');
 INSERT INTO `users_roles` VALUES ('3', '6', '4');
+INSERT INTO `users_roles` VALUES ('4', '3', '1');
+INSERT INTO `users_roles` VALUES ('5', '12', '1');
+INSERT INTO `users_roles` VALUES ('7', '14', '1');
+INSERT INTO `users_roles` VALUES ('8', '17', '2');
+INSERT INTO `users_roles` VALUES ('9', '17', '3');

@@ -36,23 +36,19 @@ class Route
         $controller_path = "app/controllers/".$controller_file;
         if(file_exists($controller_path)){
             include "app/controllers/".$controller_file;
-            $controller = new $controller_name;
-            $action = $action_name;
         }
         else{
             Route::ErrorPage404();
         }
+
+        $controller = new $controller_name;
+        $action = $action_name;
 
         if(method_exists($controller, $action)){
             $controller->$action();
         }
         else{
             Route::ErrorPage404();
-        }
-
-        if(!isset($controller)){
-            $host = 'http://'.$_SERVER['HTTP_HOST'].'/404/';
-            header('Location: '.$host);
         }
 
     }
@@ -63,4 +59,5 @@ class Route
         header("Status: 404 Not Found");
         header('Location:'.$host.'404');
     }
+
 }

@@ -41,6 +41,9 @@ class Controller_Main extends Controller
     }
 
     function action_login(){
+        if(Auth::getInstance()->getUser()){
+            $this->redirect('account');
+        }
         $this->view->setTemplateName('main/login_view.tpl');
         $this->view->getFinalPage();
     }

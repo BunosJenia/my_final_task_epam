@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="js/admin.js"></script>
+    <script src="/js/jquery-2.1.3.min.js"></script>
+    <script src="/js/admin.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Lobster|Roboto+Slab:400&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -12,8 +13,9 @@
 <div id="header">
     <ul>
         <li><a href="/main">ГЛАВНАЯ</a></li>
-        <li><a href="/admin/tests">ТЕСТЫ</a></li>
-        <li><a href="/admin/groups">ГРУППЫ</a></li>
+        <li><a href="/admin">ADMIN</a></li>
+        <li><a href="/admin/manager">MANAGER</a></li>
+        <li><a href="/admin/coach">COACH</a></li>
     </ul>
 </div>
 

@@ -57,12 +57,28 @@ class Auth
         }
     }
 
+    // Регистрируем нового пользователя
     public function registration($login, $password, $email){
         $r = DB::getInstance()->executeQuery("INSERT INTO `users`(`u_login`, `u_password`, `u_email`)
                                                       VALUES (:login, :password, :email);",
             array(array(':login', $login), array(':password', sha1($password)), array(':email', $email)));
         if($r["rows"] === 1){
             $this->user_id = $r["stmt"]->fetch(PDO::FETCH_ASSOC)["u_id"];
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    // Метод для проверки прав.
+    public function rightForAdmin($role){
+        $r = DB::getInstance()->executeQuery("SELECT `ur_user`
+                                                    FROM `users_roles`
+                                                    INNER JOIN `roles_of_users` ON `ur_role` = `rou_id`
+                                                    WHERE `ur_user`=:user_id AND `rou_name`=:role;",
+            array(array(':user_id', $this->user_id), array(':role',$role)));
+        if($r["rows"] === 1){
             return true;
         }
         else{

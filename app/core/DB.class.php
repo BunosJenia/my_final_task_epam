@@ -21,6 +21,9 @@ class DB
             ';charset='.DB_CHAR, DB_USER, DB_PASS);
     }
 
+    public function lastInsertId(){
+        return $this->connection->lastInsertId();
+    }
     // Подготавливаем данные для запроса
     private function getQueryMetadata($query, $parameters){
         $parameters_string = '';

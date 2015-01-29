@@ -18,8 +18,16 @@ class Controller_Account extends Controller
     }
 
     function action_index(){
-        $this->view->setTemplateName('account/account_view.tpl');
-        $this->view->getFinalPage();
+        // Проверяем права, если пользователь имеет права выше чем слушатель, то запускаем другое представление
+        if(Auth::getInstance()->rightForAdmin(ADMIN_ROLE_ADMIN) || Auth::getInstance()->rightForAdmin(ADMIN_ROLE_COACH)
+            || Auth::getInstance()->rightForAdmin(ADMIN_ROLE_MANAGER)){
+            $this->view->setTemplateName('account/account_admin_view.tpl');
+            $this->view->getFinalPage();
+        }
+        else{
+            $this->view->setTemplateName('account/account_view.tpl');
+            $this->view->getFinalPage();
+        }
     }
 
 }

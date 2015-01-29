@@ -7,7 +7,11 @@ class View
     private $placeholders = array();
     private $labels = array();
 
-    // Sets main template (NOT in constructor -- in order to choose template file after object creation).
+    public function __construct(){
+        $config_object = new Config();
+        $this->setLabels($config_object->getAllLabels());
+    }
+
     public function setMainTemplate($main_template_filename){
         if (!is_file($main_template_filename)) {
             throw new Exception('Main template ['.$main_template_filename.'] not found.');

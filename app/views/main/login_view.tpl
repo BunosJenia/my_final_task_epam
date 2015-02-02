@@ -4,7 +4,11 @@
         <p>{DV="lf_message"}</p>
     </div>
     <div class="col2 center form">
+<<<<<<< HEAD
         <form method="post" action="/main/login">
+=======
+        <form method="post" action="/account">
+>>>>>>> 91ee3bc47cf130dcd37d526dc3442c1a12f35b4e
             <fieldset class="login_form">
                 <label for="login"><div>{LABEL="label_login"}</div></label>
                 <input type="text" id="login" name="login" value="{DV="lf_login"}"><br>

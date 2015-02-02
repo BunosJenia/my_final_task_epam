@@ -6,8 +6,7 @@ class Config
     private $message = array();
     private $label = array();
 
-    public function __construct()
-    {
+    public function __construct(){
         $DB = DB::getInstance();
         $r = $DB->executeQuery("SELECT * FROM `config`");
         while ($row = $r['stmt']->fetch(PDO::FETCH_ASSOC)) {
@@ -20,15 +19,6 @@ class Config
         $r = $DB->executeQuery("SELECT * FROM `label`");
         while ($row = $r['stmt']->fetch(PDO::FETCH_ASSOC)) {
             $this->label[$row['l_name']] = $row['l_value'];
-        }
-    }
-
-    public function getTemplatesLocation(){
-        if (trim($this->config['templates_location'])==''){
-            return $_SERVER['DOCUMENT_ROOT'].'/templates';
-        }
-        else{
-            return $this->config['templates_location'];
         }
     }
 
@@ -61,16 +51,6 @@ class Config
 
     public function getAllLabels(){
         return $this->label;
-    }
-
-    public function getCopyrightYears(){
-        $start = $this->getParameterById('copyright_start_year');
-        if ($start == date('Y')){
-            return $start;
-        }
-        else{
-            return $start.'-'.date('Y');
-        }
     }
 
 }

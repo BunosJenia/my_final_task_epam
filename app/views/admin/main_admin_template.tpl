@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>{LABEL="title_admin"}</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <script src="/js/jquery-2.1.3.min.js"></script>
     <script src="/js/admin.js"></script>
@@ -12,10 +12,10 @@
 
 <div id="header">
     <ul>
-        <li><a href="/main">ГЛАВНАЯ</a></li>
-        <li><a href="/admin">ADMIN</a></li>
-        <li><a href="/admin/manager">MANAGER</a></li>
-        <li><a href="/admin/coach">COACH</a></li>
+        <li><a href="/main">{LABEL="url_main"}</a></li>
+        <li><a href="/admin">{LABEL="url_admin"}</a></li>
+        <li><a href="/admin/manager">{LABEL="url_manager"}</a></li>
+        <li><a href="/admin/coach">{LABEL="url_coach"}</a></li>
     </ul>
 </div>
 
@@ -25,9 +25,6 @@
     </div>
 </div>
 
-<div id="footer">
-    <span class="promo">MANF. BY <span class="font_lobster">JENIA BUNOS</span> FOR EPAM</span>
-    <span class="copy">&copy MMXV JENIA BUNOS, MINSK</span>
-</div>
+{FILE="footer_template.tpl"}
 </body>
 </html>

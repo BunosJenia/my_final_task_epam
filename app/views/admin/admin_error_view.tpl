@@ -1,1 +1,1 @@
-You dont have enough rights!
+{LABEL="text_error_admin"}

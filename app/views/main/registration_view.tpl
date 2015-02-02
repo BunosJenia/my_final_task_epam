@@ -1,21 +1,26 @@
 <div class="wrapper">
     <div class="col4">
-        <h1>Регистрация</h1>
+        <h1>{LABEL="header_registration"}</h1>
+        <p>{DV="lf_message"}</p>
     </div>
     <div class="col2 center form">
-        <form method="post" action="/">
+        <form method="post" action="/main/registration">
             <fieldset class="login_form">
-                <label for="login"><div>Логин:</div></label>
-                <input type="text" id="login" name="login" placeholder="login"><br>
-                <label for="password"><div>Пароль:</div></label>
-                <input type="password" id="password" name="password" placeholder="password"><br>
-                <label for="email"><div>Email:</div></label>
-                <input type="email" id="email" name="email" placeholder="email"><br>
-                <input type="submit" name="upload" class="button20" value="Зарегистрироваться">
+                <label for="login"><div>{LABEL="label_login"}</div></label>
+                <input type="text" id="login" name="login" value="{DV="lf_login"}"><br>
+                <label for="password"><div>{LABEL="label_password"}</div></label>
+                <input type="password" id="password" name="password"><br>
+                <label for="email"><div>{LABEL="label_email"}</div></label>
+                <input type="email" id="email" name="email" value="{DV="lf_email"}"><br>
+
+                <input type="checkbox" name="long_auth" value="1" id="long_auth"/>
+                <label for="long_auth">{LABEL="label_remember"} <span></span></label>
+
+                <input type="submit" value="{LABEL="label_reg"}">
             </fieldset>
         </form>
     </div>
     <div class="col2">
-        <p>Пожалуйста, заполняйте все поля. Все поля являются обязательными!</p>
+        <p>{LABEL="text_registration"}</p>
     </div>
 </div>

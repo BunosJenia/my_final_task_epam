@@ -32,4 +32,16 @@ class Check
             return false;
         }
     }
+
+    public static function checkPassword($password){
+        if(preg_match("/.{5,}/u", $password) === 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static function checkGroupName(){}
+
 }

@@ -1,24 +1,20 @@
 <div class="wrapper form">
-    <div class="col1">
-        <ul class="menulist">
-            <li><a href="/admin/add_rights">Добавить пользователям права</a></li>
-            <li><a href="/admin/statistics">Статистика тестов</a></li>
-            <li><a href="/admin/">Просмотр выполнения тестов по группам</a></li>
-        </ul>
-    </div>
+    {FILE="nav/nav_admin.tpl"}
     <div class="col3">
+
         <div class="wrapper">
             <div class="col4">
-                <h1>Добавить пользователям права:</h1>
-                <input type="submit" value="Все польз-ли" id="load_all_users">
-                <input type="submit" value="Польз-ли без прав" id="load_users_n_rights">
+                <h1>{LABEL="header_add_rights"}</h1>
+                <input type="submit" value="{LABEL="label_all_users_role"}" id="load_all_users">
+                <input type="submit" value="{LABEL="label_users_n_role"}" id="load_users_n_rights">
                 <form id="add_roles_to_users">
-                    <label for="roles"><div>Права:</div></label>
+                    <label for="roles"><div>{LABEL="label_roles"}</div></label>
                     <select id="roles"></select>
                     <div id="users"></div>
-                    <input type="submit" value="Добавить права">
+                    <input type="submit" value="{LABEL="label_add_roles"}">
                 </form>
             </div>
         </div>
+
     </div>
 </div>

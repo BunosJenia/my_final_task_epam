@@ -1,23 +1,28 @@
 <div class="wrapper">
     <div class="col4">
-        <h1>Войдите</h1>
+        <h1>{LABEL="header_login"}</h1>
+        <p>{DV="lf_message"}</p>
     </div>
     <div class="col2 center form">
-        <form method="post" action="/">
+        <form method="post" action="/main/login">
             <fieldset class="login_form">
-                <label for="login"><div>Логин:</div></label>
-                <input type="text" id="login" name="login" placeholder="login"><br>
-                <label for="password"><div>Пароль:</div></label>
-                <input type="password" id="password" name="password" placeholder="password"><br>
-                <input type="submit" name="upload" value="Войти">
+                <label for="login"><div>{LABEL="label_login"}</div></label>
+                <input type="text" id="login" name="login" value="{DV="lf_login"}"><br>
+                <label for="password"><div></div>{LABEL="label_password"}</label>
+                <input type="password" id="password" name="password"><br>
+
+                <input type="checkbox" name="long_auth" value="1" id="long_auth"/>
+                <label for="long_auth">{LABEL="label_remember"}<span></span></label>
+
+                <input type="submit" value="{LABEL="label_go"}">
             </fieldset>
         </form>
     </div>
     <div class="col2">
-        <p class="yellow font_lobster">Не зарегистрированы?</p>
-        <p><strong>Преимущества получения статуса зарегистрированного пользователя:</strong></p>
-        <p>- Возможность проходить все тесты и видеть результат их прохождения!</p>
-        <p>- Получить доступ к статистике прохождения!</p>
-        <a href="/main/registration">Зарегистрируйте новую учетную запись</a>
+        <p class="yellow font_lobster">{LABEL="text_registration1"}</p>
+        <p><strong>{LABEL="text_registration2"}</strong></p>
+        <p>{LABEL="text_registration3"}</p>
+        <p>{LABEL="text_registration4"}</p>
+        <a href="/main/registration">{LABEL="url_text_registration"}</a>
     </div>
 </div>

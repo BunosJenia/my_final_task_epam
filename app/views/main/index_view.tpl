@@ -1,18 +1,17 @@
 <div class="wrapper">
     <div class="col4 center form">
-        <h1 class="first_header">Добро пожаловать!</h1>
+        <h1 class="first_header">{LABEL="header_main"}</h1>
     </div>
     <div class="col2">
-        picture:testing for everyone
+        <div id="burst-12">
+            <p class="font_main">{LABEL="label_text_test_for_everyone"}</p>
+        </div>
     </div>
     <div class="col2">
         <p>
-            Вы зашли на страничку экспериментального ПО <span class="font_lobster yellow">"PHP Testing System"</span>. Данное программное
-            средство призванно проводить входное, промежуточное и конечное тестирование слушателей RD-треннингов по различным дисциплинам
-            (например, "Программирование на PHP", "Тестирование ПО", "Фронт-енд разработка" и т.д.).
+            {LABEL="label_text_mainpage1"}<span class="font_lobster yellow">{LABEL="label_text_mainpage_pts"}</span>.
         </p>
-        <p>
-
-        </p>
+        <p>{LABEL="label_text_mainpage2"}</p>
+        <p>{LABEL="label_text_mainpage3"}</p>
     </div>
 </div>

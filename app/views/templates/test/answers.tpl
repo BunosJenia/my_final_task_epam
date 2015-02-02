@@ -1,0 +1,1 @@
+<span class="answer_number">{NUMBER}{LABEL="label_dot"}</span> {ANSWER} {CORRECT}<br>

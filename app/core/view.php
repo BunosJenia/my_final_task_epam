@@ -6,10 +6,15 @@ class View
     private $template_name;
     private $placeholders = array();
     private $labels = array();
+    public $config_object;
 
     public function __construct(){
-        $config_object = new Config();
-        $this->setLabels($config_object->getAllLabels());
+        $this->config_object = new Config();
+        $this->setLabels($this->config_object->getAllLabels());
+    }
+
+    public function getConfig(){
+        return $this->config_object;
     }
 
     public function setMainTemplate($main_template_filename){
@@ -56,7 +61,8 @@ class View
         }
     }
 
-    private function processSubtemplates(){
+    // Под подключаем нашу вьюшку
+    private function processSubtemplatesView(){
         if(isset($this->template_name)){
             $subtemplate_name = $_SERVER["DOCUMENT_ROOT"].'/app/views/'.$this->template_name;
             if (is_file($subtemplate_name)){
@@ -68,18 +74,30 @@ class View
         }
     }
 
+    // Тут подключаем различные блоки
+    private function processSubtemplates($tn){
+        $subtemplate_name = $_SERVER["DOCUMENT_ROOT"].'/app/views/templates/'.$tn[1];
+        if (is_file($subtemplate_name)){
+            return file_get_contents($subtemplate_name);
+        }
+        else
+        {
+            throw new Exception('Subtemplate ['.$subtemplate_name.'] not found.');
+        }
+    }
+
     public function processTemplate()
     {
         while (preg_match("/{FILE=\"(.*)\"}|{DV=\"(.*)\"}|{LABEL=\"(.*)\"}/Ui", $this->template)){
             $this->template = preg_replace_callback("/{DV=\"(.*)\"}/Ui", array($this, 'processDV'), $this->template);
             $this->template = preg_replace_callback("/{LABEL=\"(.*)\"}/Ui", array($this, 'processLabels'), $this->template);
+            $this->template = preg_replace_callback("/{FILE=\"file\"}/Ui", array($this, 'processSubtemplatesView'), $this->template);
             $this->template = preg_replace_callback("/{FILE=\"(.*)\"}/Ui", array($this, 'processSubtemplates'), $this->template);
         }
         $this->template;
     }
 
-    public function getFinalPage($remove_comments = TRUE, $compress = TRUE)
-    {
+    public function getFinalPage($remove_comments = TRUE, $compress = TRUE){
         $this->processTemplate();
         $temp = $this->template;
         if ($remove_comments){

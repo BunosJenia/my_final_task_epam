@@ -92,7 +92,6 @@ body{
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
     font-weight: bold;
-    -moz-box-sizing: border-box;
 }
 #header ul a:hover{
     line-height: 50% normal;
@@ -110,17 +109,14 @@ body{
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
     font-weight: bold;
-    -moz-box-sizing: border-box;
 }
 #header ul a#nav_test{
     font: 1.1em 'Lobster', cursive;
     font-weight: 300;
-    -moz-box-sizing: border-box;
 }
 #header ul a#nav_test:hover{
     font: 1.1em 'Lobster', cursive;
     font-weight: 300;
-    -moz-box-sizing: border-box;
 }
 /*Navigation Block*/
 
@@ -144,10 +140,24 @@ body{
     font-weight: 100;
     letter-spacing: 1px;
 }
-p.font_lobster{
+p.font_lobster, h4.font_lobster{
     margin: 3px;
-    text-indent: 0;
+    text-indent: 0!important;
     color: #E9E581;
+}
+p.font_main{
+    color: #E9E581;
+    margin: 35px auto;
+    position:absolute;
+    font: 1.4em 'Lobster', cursive;
+    font-weight: 300;
+    text-indent: 0!important;
+    z-index: 999;
+    -webkit-transform: rotate(-20deg);
+    -moz-transform: rotate(-20deg);
+    -ms-transform: rotate(-20deg);
+    -o-transform: rotate(-20deg);
+    transform: rotate(-20deg);
 }
 p{
     margin: 3px;
@@ -187,6 +197,7 @@ a{
 }
 /*модульная сетка*/
 /*input*/
+
 .form fieldset label{
     display: block;
     margin: 0 0 0 5px;
@@ -294,7 +305,128 @@ table{
     border-collapse: collapse;
     border: 1px solid #fefa8b;
 }
+table th{
+    background-color: #6b6739;
+    border: 1px solid #fefa8b;
+    min-width: 50px;
+}
 table td{
     border: 1px solid #fefa8b;
     min-width: 50px;
+}
+
+.message_eror{
+    font: 1.3em 'Roboto Slab', serif;
+    color: #de1b1b;
+}
+
+
+
+.form input[type="radio"]{
+    display: none;
+}
+.form input[type="radio"] + label{
+    font: 1.4em 'Roboto Slab', serif;
+}
+.form input[type="radio"] + label span{
+    display: inline-block;
+    border: 1px solid #fefa8b;
+    width: 15px;
+    height: 15px;
+    margin: 4px 4px 0 0;
+    cursor: pointer;
+    -moz-border-radius:  50%;
+    border-radius:  50%;
+    -webkit-transition:background-color 0.2s linear;
+    -o-transition:background-color 0.2s linear;
+    -moz-transition:background-color 0.2s linear;
+    transition:background-color 0.2s linear;
+}
+.form input[type="radio"]:checked + label span{
+    display: inline-block;
+    border: 3px solid #fefa8b;
+    width: 11px;
+    height: 11px;
+    margin: 4px 4px 0 0;
+    background-color: #de1b1b;
+    cursor: pointer;
+}
+
+.form input[type="checkbox"]{
+    display: none;
+}
+.form input[type="checkbox"] + label{
+    font: 1.4em 'Roboto Slab', serif;
+}
+.form input[type="checkbox"] + label span{
+    display: inline-block;
+    border: 1px solid #fefa8b;
+    width: 15px;
+    height: 15px;
+    margin: 4px 4px 0 0;
+    cursor: pointer;
+    -webkit-transition:background-color 0.2s linear;
+    -o-transition:background-color 0.2s linear;
+    -moz-transition:background-color 0.2s linear;
+    transition:background-color 0.2s linear;
+}
+.form input[type="checkbox"]:checked + label span{
+    display: inline-block;
+    border: 3px solid #fefa8b;
+    width: 11px;
+    height: 11px;
+    margin: 4px 4px 0 0;
+    background-color: #de1b1b;
+    cursor: pointer;
+}
+
+.form_answer{
+    margin: 5px;
+}
+
+.message{
+    margin: 5px;
+    font: 1.4em 'Roboto Slab', serif;
+    color: #E9E581;
+}
+
+hr {
+    width: 90%;
+    height: 2px;
+    border: 0;
+    background: #de1b1b;
+    color: #de1b1b;
+}
+
+#burst-12 {
+    background: red;
+    width: 130px;
+    height: 130px;
+    margin: 20px auto;
+    position: relative;
+    text-align: center;
+}
+#burst-12:before, #burst-12:after {
+    content: "";
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    height: 130px;
+    width: 130px;
+    background: red;
+}
+#burst-12:before {
+    -webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    -o-transform: rotate(30deg);
+    transform: rotate(30deg);
+}
+#burst-12:after {
+    -webkit-transform: rotate(60deg);
+    -moz-transform: rotate(60deg);
+    -ms-transform: rotate(60deg);
+    -o-transform: rotate(60deg);
+    transform: rotate(60deg);
 }

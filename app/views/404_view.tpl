@@ -1,9 +1,9 @@
-<h1>Ошибка 404(Страница не найдена)</h1>
-<p>Пожалуйста, проверьте правильность адреса или нажмите на любую ссылку снизу:</p>
+<h1>{LABEL="header_error"}</h1>
+<p>{LABEL="text_error"}</p>
 <ul class="not_found">
-    <li><a href="/main">ГЛАВНАЯ</a></li>
-    <li><a href="/test">КАБИНЕТ</a></li>
-    <li><a href="/test" id="nav_test">ТЕСТЫ</a></li>
-    <li><a href="/main/contact">КОНТАКТЫ</a></li>
-    <li><a href="/main/about">О НАС</a></li>
+    <li><a href="/main">{LABEL="url_main"}</a></li>
+    <li><a href="/account">{LABEL="url_account"}</a></li>
+    <li><a href="/test" id="nav_test">{LABEL="url_tests"}</a></li>
+    <li><a href="/main/contact">{LABEL="url_contacts"}</a></li>
+    <li><a href="/main/about">{LABEL="url_about"}</a></li>
 </ul>

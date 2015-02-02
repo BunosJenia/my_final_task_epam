@@ -12,7 +12,7 @@ class Model_Main extends Model
             return false;
         }
         else{
-            return true;
+            return Check::checkEmail($email);
         }
     }
 
@@ -25,7 +25,7 @@ class Model_Main extends Model
             return false;
         }
         else{
-            return true;
+            return Check::checkLogin($login);
         }
     }
 

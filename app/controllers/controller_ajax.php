@@ -5,6 +5,10 @@ class Controller_Ajax extends Controller
     // Этот котролер используем для отправки ajax запросов со страницы администрации
     // В конструкторе создаем модель
     function __construct(){
+        // В каждом запросе будет POST массив, поэтому проверяем чтобы количество эл. было больше 1, иначе отправляем на главную
+        if(count($_POST) < 1){
+            $this->redirect('main');
+        }
         $this->model = new Model_Ajax();
     }
 
@@ -15,22 +19,30 @@ class Controller_Ajax extends Controller
     // Методы которые достают информацию из БД
     // Достаем все подкатегории
     function action_subcategories(){
-        echo json_encode($this->model->get_list_of_subcategories());
+        if(isset($_POST['subcategories'])){
+            echo json_encode($this->model->get_list_of_subcategories());
+        }
         die;
     }
     // Достаем все категории
     function action_category(){
-        echo json_encode($this->model->get_list_of_categories());
+        if(isset($_POST['category'])){
+            echo json_encode($this->model->get_list_of_categories());
+        }
         die;
     }
     // Достаем все вопросы
     function action_questions(){
-        echo json_encode($this->model->get_list_of_questions());
+        if(isset($_POST['questions'])) {
+            echo json_encode($this->model->get_list_of_questions());
+        }
         die;
     }
     // Достаем все группы
     function action_groups(){
-        echo json_encode($this->model->get_list_of_groups());
+        if(isset($_POST['groups'])){
+            echo json_encode($this->model->get_list_of_groups());
+        }
         die;
     }
 
@@ -51,7 +63,9 @@ class Controller_Ajax extends Controller
 
     // Методы для страницы создания нового вопроса(Достаем типы вопросов и добавляем новый(вместе с ответами))
     function action_questions_types(){
-        echo json_encode($this->model->get_list_of_questions_types());
+        if(isset($_POST['questions_types'])){
+            echo json_encode($this->model->get_list_of_questions_types());
+        }
         die;
     }
     function action_add_question(){
@@ -91,8 +105,40 @@ class Controller_Ajax extends Controller
     function action_questions_to_test(){
         if(isset($_POST['category']) && isset($_POST['subcategory'])){
             echo json_encode($this->model->get_list_of_questions_to_test($_POST['category'], $_POST['subcategory']));
-            die;
         }
+        die;
+    }
+
+    // Методы для страницы добавления категории/подкатегории к вопросам
+    function action_categories_to_questions(){
+        if(isset($_POST['category'])){
+            echo json_encode($this->model->get_list_of_categories_to_questions());
+        }
+        die;
+    }
+    function action_add_category_to_question(){
+        if(isset($_POST['category']) && isset($_POST['questions'])){
+            try{
+                if($this->model->add_category_to_questions($_POST['category'], $_POST['questions'])){
+                    echo 'Category add to question';
+                }
+                else{
+                    echo 'err';
+                }
+            }
+            catch (Exception $e){
+                echo $e->getMessage();
+            }
+        }
+        die;
+    }
+
+    // Просмотр вопросов по категориям
+    function action_question_in_category(){
+        if(isset($_POST['category'])){
+            echo json_encode($this->model->get_list_of_questions_in_category((int)$_POST['category']));
+        }
+        die;
     }
 
 
@@ -100,13 +146,11 @@ class Controller_Ajax extends Controller
     function action_test_for_group(){
         if(isset($_POST['group'])){
             echo json_encode($this->model->get_list_of_groups());
-            die;
         }
         elseif(isset($_POST['tests'])){
             echo json_encode($this->model->get_list_of_tests());
-            die;
         }
-
+        die;
     }
     function action_add_test_to_group(){
         if(isset($_POST['test']) && isset($_POST['group'])){
@@ -145,17 +189,14 @@ class Controller_Ajax extends Controller
     function action_listeners_to_group(){
         if(isset($_POST['group'])){
             echo json_encode($this->model->get_list_of_groups());
-            die;
         }
         elseif(isset($_POST['listeners'])){
             echo json_encode($this->model->get_list_of_listeners());
-            die;
         }
         elseif(isset($_POST['listener_n_group'])){
             echo json_encode($this->model->get_list_of_listeners('not_all'));
-            die();
         }
-
+        die;
     }
     function action_add_listener_to_group(){
         if(isset($_POST['group']) && isset($_POST['listener'])){
@@ -173,11 +214,29 @@ class Controller_Ajax extends Controller
         }
         die;
     }
+    function action_delete_listener_to_group(){
+        if(isset($_POST['group']) && isset($_POST['listener'])){
+            try{
+                if($this->model->delete_listener_to_group($_POST['group'], $_POST['listener'])){
+                    echo 'Listeners deleted from group';
+                }
+                else{
+                    echo 'err';
+                }
+            }
+            catch (Exception $e){
+                echo $e->getMessage();
+            }
+        }
+        die;
+    }
 
     // Для страницы добавления прав пользователям
     // Методы, которые достают права пользователей, пользователей и добавляют права пользователям.
     function action_roles_of_users(){
-        echo json_encode($this->model->get_list_of_roles());
+        if(isset($_POST['roles_of_users'])){
+            echo json_encode($this->model->get_list_of_roles());
+        }
         die;
     }
     function action_users(){
@@ -188,8 +247,8 @@ class Controller_Ajax extends Controller
             elseif($_POST['users'] === 'not_all'){
                 echo json_encode($this->model->get_list_of_users($_POST['users']));
             }
-            die;
         }
+        die;
     }
     function action_add_role_to_user(){
         if(isset($_POST['role']) && isset($_POST['user'])){
@@ -208,4 +267,69 @@ class Controller_Ajax extends Controller
         die;
     }
 
+    // Просмотр пользователей по группам
+    function action_users_from_group(){
+        if(isset($_POST['group'])){
+            echo json_encode($this->model->get_list_of_user_from_group((int)$_POST['group']));
+        }
+        die;
+    }
+    // Просмотр тестов
+    function action_questions_from_test(){
+        if(isset($_POST['test'])){
+            echo json_encode($this->model->get_list_of_tests());
+        }
+        if(isset($_POST['test_id'])){
+            echo json_encode($this->model->get_list_of_questions_from_test((int)$_POST['test_id']));
+        }
+
+        die;
+    }
+
+    // Для статистики
+    function action_statistics(){
+        if(isset($_POST['tests'])){
+            echo json_encode($this->model->statistics_test());
+        }
+        if(isset($_POST['questions'])){
+            echo json_encode($this->model->statistics_questions());
+        }
+        if(isset($_POST['correct'])){
+            echo json_encode($this->model->statistics_correct_questions());
+        }
+        if(isset($_POST['percentage'])){
+            echo json_encode($this->model->correct_percentage());
+        }
+        die;
+    }
+    function action_group_statistics(){
+        if(isset($_POST['group'])){
+            echo json_encode($this->model->group_statistics((int)$_POST['group']));
+        }
+        if(isset($_POST['test_count'])){
+            echo json_encode($this->model->question_group_statistics((int)$_POST['test_count']));
+        }
+        if(isset($_POST['percentage'])){
+            echo json_encode($this->model->group_correct_percentage((int)$_POST['percentage']));
+        }
+        die;
+    }
+    function action_user_statistics(){
+        if(isset($_POST['users'])){
+            echo json_encode($this->model->user_statistics_users((int)$_POST['users']));
+        }
+        if(isset($_POST['user']) && isset($_POST['group'])){
+            echo json_encode($this->model->user_statistics_tests((int)$_POST['user']));
+        }
+        if(isset($_POST['test_passage_info'])){
+            echo json_encode($this->model->test_result((int)$_POST['test_passage_info']));
+        }
+        die;
+    }
+
+    /*
+        ALTER TABLE `training_groups`
+            ADD CONSTRAINT `FK_stored_file_user` FOREIGN KEY (`sf_user`) REFERENCES `user` (`u_id`);
+
+     */
 }

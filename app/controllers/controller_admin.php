@@ -35,6 +35,22 @@ class Controller_Admin extends Controller
         $this->view->setTemplateName('admin/admin/statistics_view.tpl');
         $this->view->getFinalPage();
     }
+    function action_group_statistics(){
+        $this->view->setTemplateName('admin/admin/group_statistics_view.tpl');
+        $this->view->getFinalPage();
+    }
+    function action_user_statistics(){
+        $this->view->setTemplateName('admin/admin/user_statistics_view.tpl');
+        $this->view->getFinalPage();
+    }
+    function action_users_from_group(){
+        $this->view->setTemplateName('admin/admin/users_from_group.tpl');
+        $this->view->getFinalPage();
+    }
+    function action_questions_from_test(){
+        $this->view->setTemplateName('admin/admin/questions_from_test.tpl');
+        $this->view->getFinalPage();
+    }
 
     /*Станицы для менеджера*/
     // Основная страница
@@ -71,6 +87,25 @@ class Controller_Admin extends Controller
     function action_add_category(){
         if(Auth::getInstance()->rightForAdmin(ADMIN_ROLE_ADMIN) || Auth::getInstance()->rightForAdmin(ADMIN_ROLE_MANAGER)){
             $this->view->setTemplateName('admin/manager/add_category_view.tpl');
+            $this->view->getFinalPage();
+        }
+        else{
+            $this->redirect('admin/error');
+        }
+    }
+    function action_add_category_to_questions(){
+        if(Auth::getInstance()->rightForAdmin(ADMIN_ROLE_ADMIN) || Auth::getInstance()->rightForAdmin(ADMIN_ROLE_MANAGER)){
+            $this->view->setTemplateName('admin/manager/add_category_to_questions_view.tpl');
+            $this->view->getFinalPage();
+        }
+        else{
+            $this->redirect('admin/error');
+        }
+    }
+    // Сопоставление категории и вопроса
+    function action_category_to_questions(){
+        if(Auth::getInstance()->rightForAdmin(ADMIN_ROLE_ADMIN) || Auth::getInstance()->rightForAdmin(ADMIN_ROLE_MANAGER)){
+            $this->view->setTemplateName('admin/manager/category_to_questions_view.tpl');
             $this->view->getFinalPage();
         }
         else{
@@ -120,6 +155,16 @@ class Controller_Admin extends Controller
             $this->redirect('admin/error');
         }
     }
+    function action_delete_user_from_group(){
+        if(Auth::getInstance()->rightForAdmin(ADMIN_ROLE_ADMIN) || Auth::getInstance()->rightForAdmin(ADMIN_ROLE_COACH)){
+            $this->view->setTemplateName('admin/coach/delete_user_view.tpl');
+            $this->view->getFinalPage();
+        }
+        else{
+            $this->redirect('admin/error');
+        }
+    }
+
 
     // Переадресуем на эту страницу, если нет прав(только менеджера или тренера)
     function action_error(){

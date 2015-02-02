@@ -10,24 +10,25 @@ require_once 'core/controller.php';
 require_once 'core/route.php';
 require_once 'core/check.php';
 
-// Проверяем сессии и куки для авторизации
-if(isset($_COOKIE['long_auth'])){
-    $auth = Auth::getInstance();
-    $auth->processLoginByCookie();
-    if($auth->getUser()){
-        $_SESSION['logged_user'] = &$auth->getUser();
-    }
-}
+//var_dump($_COOKIE['long_auth']);
+//var_dump(Auth::getInstance()->getUser());
+//var_dump($_SESSION['logged_user']);die;
 
+
+// Проверяем сессии и куки для авторизации
 if(isset($_SESSION['logged_user'])){
     Auth::getInstance()->setUser($_SESSION['logged_user']);
 }
-
-if(isset($_GET['logout']) && $_GET['logout'] == 'go'){
-    Auth::getInstance()->processLogout();
-    header('Location: http://'.$_SERVER['HTTP_HOST'].'/');
-    die();
+else{
+    if(isset($_COOKIE['long_auth']) && $_COOKIE['long_auth'] !== '---'){
+        $auth = Auth::getInstance();
+        if($auth->processLoginByCookie() && $auth->getUser()){
+            $_SESSION['logged_user'] = $auth->getUser();
+        }
+    }
 }
+
+
 
 // запускаем маршрутизатор
 Route::start();

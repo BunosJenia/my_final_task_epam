@@ -16,7 +16,12 @@ class Auth
     // Метод который вызываем при выходе.
     public function processLogout(){
         unset($_SESSION['logged_user']);
-        setcookie('long_auth', '---', -1);
+        setcookie('long_auth', '---', -1000);
+        $this->user_id = false;
+        if($this->user_id && $_SESSION['logged_user']){
+            return false;
+        }
+        return true;
     }
 
     // Сеттер и геттер для св-ва идентификатора пользователя
@@ -44,13 +49,19 @@ class Auth
 
     // Метод в котором проверяем есть ли пользователь с таким логином и паролем, если есть, то возвращаем св-во user_id
     public function getAuthResult($login, $password){
-        $r = DB::getInstance()->executeQuery("SELECT `u_id`
-                                                    FROM `users`
-                                                    WHERE `u_login`=:login AND `u_password`=:password;",
-                                                array(array(':login', $login), array(':password', sha1($password))));
-        if($r["rows"] === 1){
-            $this->user_id = $r["stmt"]->fetch(PDO::FETCH_ASSOC)["u_id"];
-            return $this->user_id;
+        $login = Check::checkLogin($login);
+
+        if($login && Check::checkPassword($password)){
+            $r = DB::getInstance()->executeQuery("SELECT `u_id`
+                                                        FROM `users`
+                                                        WHERE `u_login`=:login AND `u_password`=:password;",
+                array(array(':login', $login), array(':password', sha1($password))));
+            if ($r["rows"] === 1) {
+                $this->user_id = $r["stmt"]->fetch(PDO::FETCH_ASSOC)["u_id"];
+                return $this->user_id;
+            } else {
+                return false;
+            }
         }
         else{
             return false;
@@ -59,16 +70,37 @@ class Auth
 
     // Регистрируем нового пользователя
     public function registration($login, $password, $email){
-        $r = DB::getInstance()->executeQuery("INSERT INTO `users`(`u_login`, `u_password`, `u_email`)
+        // Проверяем данные, если они не корректны, возвращаем false
+        $login = Check::checkLogin($login);
+        $email = Check::checkEmail($email);
+
+        if($login && $email && Check::checkPassword($password)){
+            $r = DB::getInstance()->executeQuery("INSERT INTO `users`(`u_login`, `u_password`, `u_email`)
                                                       VALUES (:login, :password, :email);",
-            array(array(':login', $login), array(':password', sha1($password)), array(':email', $email)));
-        if($r["rows"] === 1){
-            $this->user_id = $r["stmt"]->fetch(PDO::FETCH_ASSOC)["u_id"];
-            return true;
+                array(array(':login', $login), array(':password', sha1($password)), array(':email', $email)));
+            if($r["rows"] === 1){
+                $this->user_id = DB::getInstance()->lastInsertId();
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         else{
             return false;
         }
+
+    }
+
+    public function setLongAuth($remember){
+        $r = DB::getInstance()->executeQuery("UPDATE `users`
+                                                SET `u_long_auth`=:u_long_auth
+                                                WHERE `u_id`=:user_id;",
+            array(array(':user_id', $this->user_id), array(':u_long_auth', $remember)));
+        if ($r["rows"] === 1) {
+            return true;
+        }
+        return false;
     }
 
     // Метод для проверки прав.

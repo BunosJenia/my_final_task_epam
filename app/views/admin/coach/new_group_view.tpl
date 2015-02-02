@@ -1,23 +1,17 @@
 <div class="wrapper form">
-    <div class="col1">
-        <ul class="menulist">
-            <li><a href="/admin/create_group">Создание групп</a></li>
-            <li><a href="/admin/add_test_to_group">Назначение тестов</a></li>
-            <li><a href="/admin/add_user_to_group">Добавить слушателей в группу</a></li>
-        </ul>
-    </div>
+    {FILE="nav/nav_coach.tpl"}
     <div class="col3">
         <div class="wrapper">
             <div class="col4">
-                <h1>Введите данные о новой группе:</h1>
+                <h1>{LABEL="header_add_group"}</h1>
                 <form id="add_new_group">
-                    <label for="group_name"><div>Название группы:</div></label>
+                    <label for="group_name"><div>{LABEL="label_group_name"}</div></label>
                     <input type="text" id="group_name" name="group_name">
-                    <label for="group_description"><div>Описание группы:</div></label>
+                    <label for="group_description"><div>{LABEL="label_group_description"}</div></label>
                     <textarea id="group_description" name="group_description"></textarea>
-                    <input type="submit" value="Добавить группу">
+                    <input type="submit" value="{LABEL="label_add_group"}">
                 </form>
-                <input type="submit" id="load_all_groups" value="Просмотреть все группы">
+                <input type="submit" id="load_all_groups" value="{LABEL="label_all_groups"}">
             </div>
             <div class="col4" id="log"></div>
         </div>

@@ -1,27 +1,21 @@
 <div class="wrapper form">
-    <div class="col1">
-        <ul class="menulist">
-            <li><a href="/admin/add_question">Добавить вопросы</a></li>
-            <li><a href="/admin/add_test">Создать новый тест</a></li>
-            <li><a href="/admin/add_category">Добавить категорию и подкагеторию</a></li>
-        </ul>
-    </div>
+    {FILE="nav/nav_manager.tpl"}
     <div class="col3">
         <div class="wrapper">
             <div class="col4">
-                <h1>Добавить новую категорию:</h1>
-                <input type="submit" id="load_all_subcategories" value="Все подкатегории">
-                <input type="submit" id="add_categories" value="Добавить категорию">
+                <h1>{LABEL="header_add_category"}</h1>
+                <input type="submit" id="load_all_subcategories" value="{LABEL="label_all_subcategory"}">
+                <input type="submit" id="add_categories" value="{LABEL="label_add_category"}">
                 <form id="add_subcategory">
-                    <label for="categories"><div>Выберите существующую категорию:</div></label>
+                    <label for="categories"><div>{LABEL="label_categories"}</div></label>
                     <select id="categories"></select>
                     <div id="add_new_category">
-                        <label for="new_category"><div>Введите новую категорию:</div></label>
+                        <label for="new_category"><div>{LABEL="label_new_category"}</div></label>
                         <input type="text" id="new_category">
                     </div>
-                    <label for="new_subcategory"><div>Введите новую подкатегорию:</div></label>
+                    <label for="new_subcategory"><div>{LABEL="label_new_subcategory"}</div></label>
                     <input type="text" id="new_subcategory"><br>
-                    <input type="submit" value="Добавить">
+                    <input type="submit" value="{LABEL="label_add"}">
                 </form>
                 <div id="subcategories"></div>
             </div>
